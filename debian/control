@@ -2,14 +2,16 @@ Source: libnet
 Section: net
 Priority: optional
 Maintainer: Stefanos Harhalakis <v13@v13.gr>
-Build-Depends: debhelper (>= 7), sharutils, libpcap-dev, cdbs, quilt,
-	patchutils, autotools-dev
-Standards-Version: 3.8.2
+Build-Depends: debhelper (>= 9), sharutils, libpcap-dev, cdbs (>=0.4.93~),
+ patchutils, dh-autoreconf
+Standards-Version: 3.9.5
 Homepage: http://libnet-dev.sourceforge.net/
 
 Package: libnet1
 Architecture: any
 Section: libs
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}, multiarch-support
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: library for the construction and handling of network packets
  libnet provides a portable framework for low-level network packet
@@ -29,6 +31,8 @@ Package: libnet1-dbg
 Architecture: any
 Priority: extra
 Section: debug
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
 Depends: ${shlibs:Depends}, libnet1 (= ${binary:Version}), ${misc:Depends}
 Description: debugging symbols for libnet
  libnet provides a portable framework for low-level network packet

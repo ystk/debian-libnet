@@ -1,3 +1,47 @@
+libnet (1.1.6+dfsg-3) unstable; urgency=medium
+
+  * Use dh-autoreconf (closes: #751291), thanks to
+    Fernando Seiti Furusato <ferseiti@br.ibm.com>
+  * Standards version 3.9.5.0: No changes needed
+
+ -- Stefanos Harhalakis <v13@v13.gr>  Wed, 11 Jun 2014 23:32:32 +0100
+
+libnet (1.1.6+dfsg-2) unstable; urgency=low
+
+  * Standards version 3.9.4: No changes needed
+  * Upload to unstable
+
+ -- Stefanos Harhalakis <v13@v13.gr>  Sun, 14 Jul 2013 19:29:16 +0100
+
+libnet (1.1.6+dfsg-1) experimental; urgency=low
+
+  * New upstream release
+  * Standards version 3.9.3: No changes needed
+  * Fix hyphens in manpage
+  * Make the package able to compile with -Werror:
+    - Use socklen_t instead of int
+    - Prevent gcc warning for ignored returned value
+  * Multiarch:
+    - libnet1 and libnet1-dbg are Multi-Arch: same
+    - libnet1-dev is not multiarch because of /usr/bin/libnet-config
+    - no changes for libnet1-doc
+  * Remove libnet.la
+  * Remove .dirs files from debian/ since they didn't contain anything
+    useful
+  * Fix debian/copyright to pass lintian checks
+  * Remove dependency on quilt
+  * Build-Depend on debhelper >=9
+  * Remove win32/*.suo, win32/*.ncb and win32/*.opt from sources and
+    add debian/README.source
+
+ -- Stefanos Harhalakis <v13@v13.gr>  Thu, 21 Jun 2012 22:23:42 +0100
+
+libnet (1.1.5-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Stefanos Harhalakis <v13@v13.gr>  Sat, 24 Mar 2012 13:24:26 +0000
+
 libnet (1.1.4-2.1) unstable; urgency=low
 
   * Non-maintainer upload.

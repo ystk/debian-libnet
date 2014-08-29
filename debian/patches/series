@@ -1,2 +1,4 @@
-zero-pointers-after-free.patch
-Werror_format-security.patch
+fix-socklent
+fix-return-value-ignore
+fix-samples
+fix-manpages

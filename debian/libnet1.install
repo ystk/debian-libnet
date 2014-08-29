@@ -1,1 +1,1 @@
-usr/lib/libnet.so.*
+usr/lib/*/libnet.so.*
