@@ -1,8 +1,11 @@
-.TH "libnet.h" 3 "9 Jun 2009" "Version 1.1.4" "libnet" \" -*- nroff -*-
+.TH "libnet.h" 3 "Thu Mar 29 2012" "Version 1.1" "libnet" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-libnet.h \- toplevel libnet header file 
+libnet.h \- 
+.PP
+toplevel libnet header file  
+
 .SH SYNOPSIS
 .br
 .PP
@@ -28,21 +31,7 @@ libnet.h \- toplevel libnet header file
 .br
 \fC#include <sys/socket.h>\fP
 .br
-\fC#include <netinet/in.h>\fP
-.br
-\fC#include <netinet/in_systm.h>\fP
-.br
-\fC#include <netinet/ip.h>\fP
-.br
 \fC#include <net/if.h>\fP
-.br
-\fC#include <netinet/ip_var.h>\fP
-.br
-\fC#include <netinet/tcp.h>\fP
-.br
-\fC#include <netinet/udp.h>\fP
-.br
-\fC#include <netinet/igmp.h>\fP
 .br
 \fC#include <arpa/inet.h>\fP
 .br
@@ -71,10 +60,7 @@ libnet.h \- toplevel libnet header file
 
 .in +1c
 .ti -1c
-.RI "#define \fB_GNU_SOURCE\fP"
-.br
-.ti -1c
-.RI "#define \fBLIBNET_VERSION\fP   '1.1.4'"
+.RI "#define \fBLIBNET_VERSION\fP   '1.1.6'"
 .br
 .ti -1c
 .RI "#define \fBLIBNET_LIL_ENDIAN\fP   1"

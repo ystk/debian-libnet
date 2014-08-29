@@ -154,6 +154,9 @@ register char *errbuf)
 	snprintf(errbuf, LIBNET_ERRBUF_SIZE,
                 "%s(): ioctl(SIOCGIFCONF) error: %s\n", 
                 __func__, strerror(errno));
+#ifdef HAVE_LINUX_PROCFS
+	fclose(fp);
+#endif
 	return(-1);
     }
 
@@ -224,6 +227,9 @@ register char *errbuf)
                         "%s(): SIOCGIFADDR: dev=%s: %s\n", __func__, device,
                         strerror(errno));
                 close(fd);
+#ifdef HAVE_LINUX_PROCFS
+                fclose(fp);
+#endif
                 return (-1);
 	    }
             else /* device has no IP address => set to 0 */
@@ -236,15 +242,16 @@ register char *errbuf)
             al->addr = ((struct sockaddr_in *)&nifr.ifr_addr)->sin_addr.s_addr;
         }
         
-        if (al->device)
-        {
-            /* fix memory leak */
-            free(al->device);
-        }
+        free(al->device);
+        al->device = NULL;
+
         if ((al->device = strdup(device)) == NULL)
         {
             snprintf(errbuf, LIBNET_ERRBUF_SIZE, 
                     "%s(): strdup not enough memory\n", __func__);
+#ifdef HAVE_LINUX_PROCFS
+            fclose(fp);
+#endif
             return(-1);
         }
 
@@ -262,6 +269,7 @@ register char *errbuf)
     {
         snprintf(errbuf, LIBNET_ERRBUF_SIZE,
                 "%s(): ferror: %s\n", __func__, strerror(errno));
+	fclose(fp);
 	return (-1);
     }
     fclose(fp);
@@ -273,13 +281,13 @@ register char *errbuf)
 #else
 /* From tcptraceroute, convert a numeric IP address to a string */
 #define IPTOSBUFFERS    12
-static int8_t *iptos(u_int32_t in)
+static int8_t *iptos(uint32_t in)
 {
     static int8_t output[IPTOSBUFFERS][ 3 * 4 + 3 + 1];
     static int16_t which;
-    u_int8_t *p;
+    uint8_t *p;
 
-    p = (u_int8_t *)&in;
+    p = (uint8_t *)&in;
     which = (which + 1 == IPTOSBUFFERS ? 0 : which + 1);
     snprintf(output[which], IPTOSBUFFERS, "%d.%d.%d.%d", 
             p[0], p[1], p[2], p[3]);
@@ -315,7 +323,7 @@ register char *errbuf)
     
 		/* XXX - strdup */
         ifaddrlist[i].device = strdup(d->name);
-        ifaddrlist[i].addr = (u_int32_t)
+        ifaddrlist[i].addr = (uint32_t)
                 strdup(iptos(((struct sockaddr_in *)
                 d->addresses->addr)->sin_addr.s_addr));
         ++i;
@@ -333,7 +341,7 @@ libnet_select_device(libnet_t *l)
     int c, i;
     char err_buf[LIBNET_ERRBUF_SIZE];
     struct libnet_ifaddr_list *address_list, *al;
-    u_int32_t addr;
+    uint32_t addr;
 
 
     if (l == NULL)
@@ -406,6 +414,7 @@ good:
     for (i = 0; i < c; i++)
     {
         free(al[i].device);
+        al[i].device = NULL;
     }
     return (1);
 
@@ -413,6 +422,7 @@ bad:
     for (i = 0; i < c; i++)
     {
         free(al[i].device);
+        al[i].device = NULL;
     }
     return (-1);
 }
